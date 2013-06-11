@@ -23,8 +23,11 @@ namespace OauthExternalAuthentication
                     var providerName = authResult.Provider;
                     var providerUserId = authResult.ProviderUserId;
                     var provierUserName = authResult.UserName;
-                    var name = authResult.ExtraData["name"];
-
+                    var name = string.Empty;
+                    if (authResult.ExtraData.ContainsKey("name"))
+                    {
+                         name = authResult.ExtraData["name"];
+                    }
                     var userManager = UserManager.GetManager();
                     var currentUser = userManager.GetUsers().Where(user => user.UserName == providerUserId).FirstOrDefault();
                     if (currentUser == null)
@@ -34,7 +37,7 @@ namespace OauthExternalAuthentication
                             SystemManager.RunWithElevatedPrivilege(p => { CreateUser(providerUserId, nameParts[0], nameParts[1], provierUserName); });
                         else
                         {
-                            SystemManager.RunWithElevatedPrivilege(p => { CreateUser(providerUserId, name, "", provierUserName); });
+                            SystemManager.RunWithElevatedPrivilege(p => { CreateUser(providerUserId, "", "", provierUserName); });
                         }
 
                         currentUser = userManager.GetUsers().Where(user => user.UserName == providerUserId).FirstOrDefault();
@@ -82,12 +85,15 @@ namespace OauthExternalAuthentication
 
             var profile = profileManager.CreateProfile(currentUser, "Telerik.Sitefinity.Security.Model.SitefinityProfile") as SitefinityProfile;
 
-            profile.FirstName = firstname;
-            profile.LastName = lastname;
-            profile.Nickname = username;
-            profileManager.RecompileItemUrls<SitefinityProfile>(profile);
+            if (!String.IsNullOrEmpty(firstname) && !string.IsNullOrEmpty(lastname) && !string.IsNullOrEmpty(username))
+            {
+                profile.FirstName = firstname;
+                profile.LastName = lastname;
+                profile.Nickname = username;
+                profileManager.RecompileItemUrls<SitefinityProfile>(profile);
 
-            TransactionManager.CommitTransaction(transaction);
+                TransactionManager.CommitTransaction(transaction);
+            }
         }
 
         protected override void SendLoginForm(HttpContext context, string message)

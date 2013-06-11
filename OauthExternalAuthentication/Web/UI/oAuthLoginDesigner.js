@@ -3,7 +3,8 @@
 
 OauthExternalAuthentication.Web.UI.oAuthLoginDesigner = function (element) {
     OauthExternalAuthentication.Web.UI.oAuthLoginDesigner.initializeBase(this, [element]);
-    
+    this._pageSelectorOpenedDelegate = null;
+    this._pageSelectorClosedDelegate = null;
     this._pagePicker = null;
 }
 
@@ -11,7 +12,10 @@ OauthExternalAuthentication.Web.UI.oAuthLoginDesigner.prototype = {
     initialize: function () {
         OauthExternalAuthentication.Web.UI.oAuthLoginDesigner.callBaseMethod(this, 'initialize');
 
-        
+        this._pageSelectorOpenedDelegate = Function.createDelegate(this, this._pageSelectorOpened);
+        this._pageSelectorClosedDelegate = Function.createDelegate(this, this._pageSelectorClosed);
+        this.get_pagePicker().add_selectorOpened(this._pageSelectorOpenedDelegate);
+        this.get_pagePicker().add_selectorClosed(this._pageSelectorClosedDelegate);
 
     },
 
@@ -22,9 +26,21 @@ OauthExternalAuthentication.Web.UI.oAuthLoginDesigner.prototype = {
             delete this.oAuthAuthenticationDelegate;
         }
 
+        if (this._pageSelectorOpenedDelegate != null)
+            delete this._pageSelectorOpenedDelegate;
+        if (this._pageSelectorClosedDelegate != null)
+            delete this._pageSelectorClosedDelegate;
+
         OauthExternalAuthentication.Web.UI.oAuthLoginDesigner.callBaseMethod(this, 'dispose');
     },
 
+    _pageSelectorOpened: function () {
+        dialogBase.resizeToContent();
+    },
+
+    _pageSelectorClosed: function () {
+        dialogBase.resizeToContent();
+    },
     refreshUI: function () {
         var data = this._propertyEditor.get_control();
         var pageSelector = this.get_pagePicker();

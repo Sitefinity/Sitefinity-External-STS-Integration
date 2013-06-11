@@ -75,10 +75,10 @@ namespace OauthExternalAuthentication
             string appSecret = WebConfigurationManager.AppSettings["FacebookAppSecret"].ToString();
 
             OpenAuth.AuthenticationClients.AddFacebook(
-                appId: "513293092039047",
-             appSecret: "44e9e12fcee47448d14a9e0242f08260");
+                appId: appId,
+             appSecret: appSecret);
 
-
+      
 
 
         }
