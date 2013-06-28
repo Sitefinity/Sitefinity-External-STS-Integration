@@ -11,6 +11,9 @@
     <AssemblyName>OauthExternalAuthentication</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,75 +32,58 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml">
-      <HintPath>..\ReferenceAssemblies\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.AspNet">
-      <HintPath>..\ReferenceAssemblies\DotNetOpenAuth.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.Core">
-      <HintPath>..\ReferenceAssemblies\DotNetOpenAuth.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OAuth">
-      <HintPath>..\ReferenceAssemblies\DotNetOpenAuth.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
-      <HintPath>..\ReferenceAssemblies\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId">
-      <HintPath>..\ReferenceAssemblies\DotNetOpenAuth.OpenId.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
-      <HintPath>..\ReferenceAssemblies\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Membership.OpenAuth">
-      <HintPath>..\ReferenceAssemblies\Microsoft.AspNet.Membership.OpenAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\Work\New folder\test\packages\Microsoft.AspNet.WebPages.OAuth.2.0.20710.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2013.1.418.2, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Sample\SitefinityWebApp\bin\Telerik.OpenAccess.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity, Version=6.0.4100.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Sample\SitefinityWebApp\bin\Telerik.Sitefinity.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.Model, Version=6.0.4100.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Sample\SitefinityWebApp\bin\Telerik.Sitefinity.Model.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OAuthAuthenticationHttpHandler.cs" />
+    <Compile Include="AmazonProvider\AmazonOpenAuthenticationProvider.cs" />
+    <Compile Include="AmazonProvider\Requires.cs" />
+    <Compile Include="AmazonProvider\UriUtilities.cs" />
+    <Compile Include="OAEConfig.cs" />
+    <Compile Include="OAuthAuthenticationHttpHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="OAuthAuthenticationModule.cs" />
+    <Compile Include="OauthExternalAuthenticationResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Web\UI\OAuthLoginForm.js" />
-    <EmbeddedResource Include="Web\UI\OAuthLoginForm.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
+    <Compile Include="Web\UI\oAuthLoginDesigner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Web\UI\OAuthLoginForm.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Web\UI\oAuthLoginDesigner.js" />
     <EmbeddedResource Include="Web\UI\oAuthLoginDesignerTemplate.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Web\UI\oAuthLoginDesigner.js" />
-    <Compile Include="Web\UI\oAuthLoginDesigner.cs" />
-    <Compile Include="Web\UI\OAuthLoginForm.cs" />
+    <EmbeddedResource Include="Web\UI\OAuthLoginForm.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Web\UI\OAuthLoginForm.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Web\UI\Images\Amazon.png" />
+    <EmbeddedResource Include="Web\UI\Images\Facebook.png" />
+    <EmbeddedResource Include="Web\UI\Images\Google.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

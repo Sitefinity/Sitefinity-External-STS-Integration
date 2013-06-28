@@ -43,7 +43,7 @@ OauthExternalAuthentication.Web.UI.OAuthLoginForm.prototype = {
          
         var provider = args.target.id;
         var returnURL = $(location).attr("href");
-        var loginUrl = this.get_oAuthServiceUrl() + "&oauthProvider=" + provider;
+        var loginUrl = this.get_oAuthServiceUrl() + "&oaprovider=" + provider;
         $(location).attr('href', loginUrl);
     }
 }

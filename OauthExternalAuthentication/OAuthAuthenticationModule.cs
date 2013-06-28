@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Membership.OpenAuth;
-using OauthExternalAuthentication.Web.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +9,12 @@ using Telerik.Sitefinity.Abstractions.VirtualPath.Configuration;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
+using OauthExternalAuthentication.Web.UI;
+using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Localization;
+using DotNetOpenAuth.AspNet;
+using OauthExternalAuthentication.AmazonProvider;
+using Microsoft.AspNet.Membership.OpenAuth;
 
 
 namespace OauthExternalAuthentication
@@ -69,18 +73,33 @@ namespace OauthExternalAuthentication
 
         public void Initialize(ModuleSettings settings)
         {
+            Res.RegisterResource<OauthExternalAuthenticationResources>();
+
+            Config.RegisterSection<OAEConfig>();
+       
             Bootstrapper.Initialized += Bootstrapper_Initialized;
 
-            string appId = WebConfigurationManager.AppSettings["FacebookAppId"].ToString();
-            string appSecret = WebConfigurationManager.AppSettings["FacebookAppSecret"].ToString();
+            var oaeConfig = Config.Get<OAEConfig>();
 
-            OpenAuth.AuthenticationClients.AddFacebook(
-                appId: appId,
-             appSecret: appSecret);
+            //Facebook
+            if (!String.IsNullOrEmpty(oaeConfig.FacebookAPPID) && !String.IsNullOrEmpty(oaeConfig.FacebookAPPSecretKey))
+            {
+                OpenAuth.AuthenticationClients.AddFacebook(
+                    appId: oaeConfig.FacebookAPPID,
+                 appSecret: oaeConfig.FacebookAPPSecretKey);
+            }
 
-      
+            //Google
+            if(oaeConfig.EnableGooglePlus)
+                OpenAuth.AuthenticationClients.AddGoogle();
 
-
+            //Amazon
+            if (!String.IsNullOrEmpty(oaeConfig.AmazonAPPID) && !String.IsNullOrEmpty(oaeConfig.AmazonAPPSecretKey))
+            {
+                //OpenAuth.AuthenticationClients.Add("Amazon", (Func<IAuthenticationClient>)(() => (IAuthenticationClient)new AmazonOpenAuthenticationProvider("amzn1.application-oa2-client.19782be9a3c54a29ba54ad753e9e4630", "ffb32157e1b759ec2e8a165a08456022a69d83a55b2ad5b80bce3dcdb2fd0da0")), null);
+                OpenAuth.AuthenticationClients.Add("Amazon", (Func<IAuthenticationClient>)(() => 
+                    (IAuthenticationClient)new AmazonOpenAuthenticationProvider(oaeConfig.AmazonAPPID, oaeConfig.AmazonAPPSecretKey)), null);
+            }
         }
 
         void Bootstrapper_Initialized(object sender, Telerik.Sitefinity.Data.ExecutedEventArgs e)
@@ -91,6 +110,7 @@ namespace OauthExternalAuthentication
             }
         }
 
+        
         public void Install(Telerik.Sitefinity.Abstractions.SiteInitializer initializer, Version upgradeFrom)
         {
             var config = initializer.Context.GetConfig<ToolboxesConfig>();

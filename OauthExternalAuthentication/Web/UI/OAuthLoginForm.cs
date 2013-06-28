@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Membership.OpenAuth;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,6 @@ namespace OauthExternalAuthentication.Web.UI
             base.CreateChildControls();
 
             var oauthLoginControls = this.Page.LoadControl(oauthLoginControlsTemplate);
-
             this.Controls.Add(oauthLoginControls);
         }
 
@@ -45,10 +44,6 @@ namespace OauthExternalAuthentication.Web.UI
                 return String.Empty;
             }
         }
-
-
-     
-        
 
         public override IEnumerable<System.Web.UI.ScriptDescriptor> GetScriptDescriptors()
         {

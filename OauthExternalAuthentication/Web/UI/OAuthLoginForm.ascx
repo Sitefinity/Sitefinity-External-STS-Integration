@@ -1,8 +1,25 @@
 ﻿<%@ Control Language="C#" %>
-<div>
-    Login using :
-</div>
+<%@ Import Namespace="Microsoft.AspNet.Membership.OpenAuth" %>
+<%@ Import Namespace="System.Linq" %>
 <div id="oAuthProviders">
-    <a id="facebook" href="javascript:void();" class="oauthloginprovider">Facebook</a>
-  
+    <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "facebook"))
+       { %>
+    <a  href="javascript:void();" class="oauthloginprovider">
+        <img id="facebook" src="<%=this.Page.ClientScript.GetWebResourceUrl(typeof(OauthExternalAuthentication.Web.UI.OAuthLoginForm), "OauthExternalAuthentication.Web.UI.Images.Facebook.png")%>" alt="Facebook" />
+    </a>
+    <br />
+    <%} %>
+    <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "google"))
+       { %>
+    <a href="javascript:void();" class="oauthloginprovider">
+        <img id="google" src="<%=this.Page.ClientScript.GetWebResourceUrl(typeof(OauthExternalAuthentication.Web.UI.OAuthLoginForm), "OauthExternalAuthentication.Web.UI.Images.Google.png")%>" alt="Google" />
+    </a>
+    <br />
+    <%} %>
+     <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "Amazon"))
+       { %>
+    <a href="javascript:void();" class="oauthloginprovider">
+        <img id="Img1" src="<%=this.Page.ClientScript.GetWebResourceUrl(typeof(OauthExternalAuthentication.Web.UI.OAuthLoginForm), "OauthExternalAuthentication.Web.UI.Images.Amazon.png")%>" alt="Amazon" />
+    </a>
+    <%} %>
 </div>

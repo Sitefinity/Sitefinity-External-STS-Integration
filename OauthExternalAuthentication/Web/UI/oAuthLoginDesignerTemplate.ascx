@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" %>
 <%@ Register TagPrefix="sitefinity" Assembly="Telerik.Sitefinity" Namespace="Telerik.Sitefinity.Web.UI.Fields" %>
-<div>Landing Page : </div>
+<div>
+     <asp:Label ID="buttonText" runat="server" Text='<%$Resources:OauthExternalAuthenticationResources, LandingPage %>' />
+</div>
 
 <sitefinity:PageField 
             ID="pageField" 
