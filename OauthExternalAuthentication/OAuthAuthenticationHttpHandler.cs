@@ -145,16 +145,27 @@ namespace OauthExternalAuthentication
 
         protected override void SendLoginForm(HttpContext context, string message)
         {
-            if (!String.IsNullOrWhiteSpace(context.Request.QueryString["oaprovider"]))
+
+            SentLoginForm();
+            base.SendLoginForm(context, message);
+        }
+
+        protected override void SendLoginForm(HttpContextBase context, string message)
+        {
+            SentLoginForm();
+            base.SendLoginForm(context, message);
+        }
+
+        private void SentLoginForm()
+        {
+            if (!String.IsNullOrWhiteSpace(SystemManager.CurrentHttpContext.Request.QueryString["oaprovider"]))
             {
-                OpenAuth.RequestAuthentication(context.Request.QueryString["oaprovider"],
+                OpenAuth.RequestAuthentication(SystemManager.CurrentHttpContext.Request.QueryString["oaprovider"],
                     //context.Request.Url.GetLeftPart(UriPartial.Path).Replace(context.Request.Url.GetLeftPart(UriPartial.Authority), string.Empty) +
                     //"?state=" + HttpUtility.UrlEncode(context.Request.Url.Query + "&redirectOauth=true")
-                    context.Request.RawUrl + "&redirectOauth=true"
+                    SystemManager.CurrentHttpContext.Request.RawUrl + "&redirectOauth=true"
                     );
             }
-
-            base.SendLoginForm(context, message);
         }
     }
 }

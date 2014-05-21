@@ -16,10 +16,10 @@
     </a>
     <br />
     <%} %>
-     <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "Amazon"))
+    <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "Amazon"))
        { %>
     <a href="javascript:void();" class="oauthloginprovider">
-        <img id="Img1" src="<%=this.Page.ClientScript.GetWebResourceUrl(typeof(OauthExternalAuthentication.Web.UI.OAuthLoginForm), "OauthExternalAuthentication.Web.UI.Images.Amazon.png")%>" alt="Amazon" />
+        <img id="Amazon" src="<%=this.Page.ClientScript.GetWebResourceUrl(typeof(OauthExternalAuthentication.Web.UI.OAuthLoginForm), "OauthExternalAuthentication.Web.UI.Images.Amazon.png")%>" alt="Amazon" />
     </a>
     <%} %>
 </div>
