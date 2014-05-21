@@ -84,21 +84,34 @@ namespace OauthExternalAuthentication
             //Facebook
             if (!String.IsNullOrEmpty(oaeConfig.FacebookAPPID) && !String.IsNullOrEmpty(oaeConfig.FacebookAPPSecretKey))
             {
-                OpenAuth.AuthenticationClients.AddFacebook(
-                    appId: oaeConfig.FacebookAPPID,
-                 appSecret: oaeConfig.FacebookAPPSecretKey);
+                ProviderDetails faecbookClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName == "facebook");
+                if (faecbookClient == null)
+                {
+                    OpenAuth.AuthenticationClients.AddFacebook(
+                        appId: oaeConfig.FacebookAPPID,
+                     appSecret: oaeConfig.FacebookAPPSecretKey);
+                }
             }
 
             //Google
-            if(oaeConfig.EnableGooglePlus)
-                OpenAuth.AuthenticationClients.AddGoogle();
-
+            if (oaeConfig.EnableGooglePlus)
+            {
+                ProviderDetails googleClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName == "google");
+                if (googleClient == null)
+                {
+                    OpenAuth.AuthenticationClients.AddGoogle();
+                }
+            }
             //Amazon
             if (!String.IsNullOrEmpty(oaeConfig.AmazonAPPID) && !String.IsNullOrEmpty(oaeConfig.AmazonAPPSecretKey))
             {
-                //OpenAuth.AuthenticationClients.Add("Amazon", (Func<IAuthenticationClient>)(() => (IAuthenticationClient)new AmazonOpenAuthenticationProvider("amzn1.application-oa2-client.19782be9a3c54a29ba54ad753e9e4630", "ffb32157e1b759ec2e8a165a08456022a69d83a55b2ad5b80bce3dcdb2fd0da0")), null);
-                OpenAuth.AuthenticationClients.Add("Amazon", (Func<IAuthenticationClient>)(() => 
-                    (IAuthenticationClient)new AmazonOpenAuthenticationProvider(oaeConfig.AmazonAPPID, oaeConfig.AmazonAPPSecretKey)), null);
+                ProviderDetails amazonClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName == "Amazon");
+                if (amazonClient == null)
+                {
+                    //OpenAuth.AuthenticationClients.Add("Amazon", (Func<IAuthenticationClient>)(() => (IAuthenticationClient)new AmazonOpenAuthenticationProvider("amzn1.application-oa2-client.19782be9a3c54a29ba54ad753e9e4630", "ffb32157e1b759ec2e8a165a08456022a69d83a55b2ad5b80bce3dcdb2fd0da0")), null);
+                    OpenAuth.AuthenticationClients.Add("Amazon", (Func<IAuthenticationClient>)(() =>
+                        (IAuthenticationClient)new AmazonOpenAuthenticationProvider(oaeConfig.AmazonAPPID, oaeConfig.AmazonAPPSecretKey)), null);
+                }
             }
         }
 
