@@ -183,3 +183,6 @@ FakesAssemblies/
 *.lic
 *.jmconfig
 .nuget/NuGet.exe
+OauthExternalAuthentication/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+OauthExternalAuthentication/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+*.bak

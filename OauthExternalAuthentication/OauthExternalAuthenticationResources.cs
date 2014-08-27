@@ -105,32 +105,59 @@ namespace OauthExternalAuthentication
 
         #endregion
 
-        #region Config Property EnableGooglePlus
+        #region GooglePlus
 
 
-        [ResourceEntry("EnableGooglePlusTitle",
-                      Value = "Enable Google Plus",
+        [ResourceEntry("GoogleClientIDTitle",
+                      Value = "Google Plus Client ID",
                       Description = "Enable Google Plus",
-                      LastModified = "2013/06/01")]
-        public string EnableGooglePlusTitle
+                      LastModified = "2014/08/026")]
+        public string GoogleClientIDTitle
         {
             get
             {
-                return this["EnableGooglePlusTitle"];
+                return this["GoogleClientIDTitle"];
             }
         }
 
-        [ResourceEntry("EnableGooglePlusDescription",
-                    Value = " ",
-                    Description = "Enable Google Plus Description",
-                    LastModified = "2013/06/01")]
-        public string EnableGooglePlusDescription
+        [ResourceEntry("GoogleClientIDDescription",
+                   Value = "Google Plus Client ID",
+                   Description = "Enable Google Plus",
+                   LastModified = "2014/08/026")]
+        public string GoogleClientIDDescription
         {
             get
             {
-                return this["EnableGooglePlusDescription"];
+                return this["GoogleClientIDDescription"];
             }
         }
+
+
+        [ResourceEntry("GoogleClientSecretTitle",
+                   Value = "Google Client Secret",
+                   Description = "Enable Google Plus",
+                   LastModified = "2014/08/026")]
+        public string GoogleClientSecretTitle
+        {
+            get
+            {
+                return this["GoogleClientSecretTitle"];
+            }
+        }
+
+        [ResourceEntry("GoogleClientSecretDescription",
+                Value = "Google Client Secret",
+                Description = "Enable Google Plus",
+                LastModified = "2014/08/026")]
+        public string GoogleClientSecretDescription
+        {
+            get
+            {
+                return this["GoogleClientSecretDescription"];
+            }
+        }
+
+      
 
         #endregion
 
