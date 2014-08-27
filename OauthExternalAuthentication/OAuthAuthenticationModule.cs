@@ -15,6 +15,7 @@ using Telerik.Sitefinity.Localization;
 using DotNetOpenAuth.AspNet;
 using OauthExternalAuthentication.AmazonProvider;
 using Microsoft.AspNet.Membership.OpenAuth;
+using DotNetOpenAuth.GoogleOAuth2;
 
 
 namespace OauthExternalAuthentication
@@ -94,13 +95,9 @@ namespace OauthExternalAuthentication
             }
 
             //Google
-            if (oaeConfig.EnableGooglePlus)
+            if (!String.IsNullOrEmpty(oaeConfig.GoogleClientID) && !String.IsNullOrEmpty(oaeConfig.GoogleClientSecret))
             {
-                ProviderDetails googleClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName == "google");
-                if (googleClient == null)
-                {
-                    OpenAuth.AuthenticationClients.AddGoogle();
-                }
+                OpenAuth.AuthenticationClients.Add("Google", () => new GoogleOAuth2Client(oaeConfig.GoogleClientID, oaeConfig.GoogleClientSecret));﻿
             }
             //Amazon
             if (!String.IsNullOrEmpty(oaeConfig.AmazonAPPID) && !String.IsNullOrEmpty(oaeConfig.AmazonAPPSecretKey))

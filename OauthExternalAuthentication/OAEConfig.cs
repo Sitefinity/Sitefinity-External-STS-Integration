@@ -48,17 +48,33 @@ namespace OauthExternalAuthentication
 
         #region Google Plus 
 
-        [ConfigurationProperty("EnableGooglePlus")]
-        [ObjectInfo(typeof(OauthExternalAuthenticationResources), Title = "EnableGooglePlusTitle", Description = "EnableGooglePlusDescription")]
-        public bool EnableGooglePlus
+        [ConfigurationProperty("GoogleClientID")]
+        [ObjectInfo(typeof(OauthExternalAuthenticationResources), Title = "GoogleClientIDTitle", Description = "GoogleClientIDDescription")]
+        public string GoogleClientID
         {
             get
             {
-                return (bool)this["EnableGooglePlus"];
+                return (string)this["GoogleClientID"];
             }
             set
             {
-                this["EnableGooglePlus"] = value;
+                this["GoogleClientID"] = value;
+            }
+        }
+
+
+
+        [ConfigurationProperty("GoogleClientSecret")]
+        [ObjectInfo(typeof(OauthExternalAuthenticationResources), Title = "GoogleClientSecretTitle", Description = "GoogleClientSecretDescription")]
+        public string GoogleClientSecret
+        {
+            get
+            {
+                return (string)this["GoogleClientSecret"];
+            }
+            set
+            {
+                this["GoogleClientSecret"] = value;
             }
         }
 

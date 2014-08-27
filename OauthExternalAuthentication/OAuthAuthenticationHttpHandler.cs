@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using DotNetOpenAuth.AspNet;
+using DotNetOpenAuth.GoogleOAuth2;
 using Microsoft.AspNet.Membership.OpenAuth;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Security;
@@ -42,11 +43,16 @@ namespace OauthExternalAuthentication
 
         private void TranslateStateArgument(HttpContext context)
         {
+            
             var stateQueryString = context.Request.QueryString["state"];
-            var decodedQueryString = System.Text.ASCIIEncoding.ASCII.GetString(System.Convert.FromBase64String(stateQueryString));
-            if (decodedQueryString.StartsWith("?"))
-                decodedQueryString = decodedQueryString.Substring(1);
-
+            var decodedQueryString =stateQueryString ;
+             
+            if (stateQueryString == null || !stateQueryString.Contains("__provider__=google"))
+            {
+                decodedQueryString = System.Text.ASCIIEncoding.ASCII.GetString(System.Convert.FromBase64String(stateQueryString));
+                if (decodedQueryString.StartsWith("?"))
+                    decodedQueryString = decodedQueryString.Substring(1);
+            }
             UriBuilder builder = new UriBuilder(context.Request.Url.GetLeftPart(UriPartial.Path));
             var queryStringBuilder = new StringBuilder();
             var otherKeys = context.Request.QueryString.AllKeys.Where(p => p != "state");
