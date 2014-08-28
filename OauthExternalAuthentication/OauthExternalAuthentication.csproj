@@ -36,6 +36,12 @@
   <Choose>
     <When Condition="Exists('..\SitefinityWebApp')">
       <ItemGroup>
+        <Reference Include="ServiceStack">
+          <HintPath>..\SitefinityWebApp\packages\ServiceStack.Signed.4.0.22\lib\net40\ServiceStack.dll</HintPath>
+        </Reference>
+        <Reference Include="Telerik.Sitefinity.RecycleBin">
+          <HintPath>..\SitefinityWebApp\packages\Telerik.Sitefinity.RecycleBin.7.1.5207.0\lib\net40\Telerik.Sitefinity.RecycleBin.dll</HintPath>
+        </Reference>
         <Reference Include="DotNetOpenAuth.AspNet, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\SitefinityWebApp\packages\DotNetOpenAuth.AspNet.4.3.4.13329\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
@@ -176,6 +182,12 @@
     </When>
     <Otherwise>
       <ItemGroup>
+        <Reference Include="ServiceStack">
+          <HintPath>packages\ServiceStack.Signed.4.0.22\lib\net40\ServiceStack.dll</HintPath>
+        </Reference>
+        <Reference Include="Telerik.Sitefinity.RecycleBin">
+          <HintPath>packages\Telerik.Sitefinity.RecycleBin.7.1.5207.0\lib\net40\Telerik.Sitefinity.RecycleBin.dll</HintPath>
+        </Reference>
         <Reference Include="DotNetOpenAuth.AspNet, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
           <HintPath>packages\DotNetOpenAuth.AspNet.4.3.4.13329\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
