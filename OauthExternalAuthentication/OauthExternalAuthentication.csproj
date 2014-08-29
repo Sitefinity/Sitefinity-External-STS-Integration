@@ -36,6 +36,9 @@
   <Choose>
     <When Condition="Exists('..\SitefinityWebApp')">
       <ItemGroup>
+        <Reference Include="StyleCop">
+          <HintPath>..\SitefinityWebApp\packages\StyleCop.MSBuild.4.7.49.0\tools\StyleCop.dll</HintPath>
+        </Reference>
         <Reference Include="Telerik.Sitefinity.Services.RecycleBin">
           <HintPath>..\SitefinityWebApp\packages\Telerik.Sitefinity.ServicesImpl.7.1.5207.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.dll</HintPath>
         </Reference>
@@ -185,6 +188,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
+        <Reference Include="StyleCop">
+          <HintPath>packages\StyleCop.MSBuild.4.7.49.0\tools\StyleCop.dll</HintPath>
+        </Reference>
         <Reference Include="Telerik.Sitefinity.Services.RecycleBin">
           <HintPath>packages\Telerik.Sitefinity.ServicesImpl.7.1.5207.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.dll</HintPath>
         </Reference>
@@ -354,6 +360,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Web\UI\oAuthLoginDesigner.js" />
