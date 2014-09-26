@@ -15,11 +15,14 @@ namespace OauthExternalAuthentication
         /// <summary>
         /// Help
         /// </summary>
+        /// <value>
+        /// The oae resources title.
+        /// </value>
         [ResourceEntry("OAEResourcesTitle",
                        Value = "Open Authentican Module Resources",
                        Description = "The title of this class.",
                        LastModified = "2013/06/01")]
-         public string OAEResourcesTitle
+        public string OAEResourcesTitle
         {
             get
             {
@@ -107,7 +110,6 @@ namespace OauthExternalAuthentication
 
         #region GooglePlus
 
-
         [ResourceEntry("GoogleClientIDTitle",
                       Value = "Google Plus Client ID",
                       Description = "Enable Google Plus",
@@ -132,7 +134,6 @@ namespace OauthExternalAuthentication
             }
         }
 
-
         [ResourceEntry("GoogleClientSecretTitle",
                    Value = "Google Client Secret",
                    Description = "Enable Google Plus",
@@ -156,8 +157,6 @@ namespace OauthExternalAuthentication
                 return this["GoogleClientSecretDescription"];
             }
         }
-
-      
 
         #endregion
 
@@ -249,7 +248,6 @@ namespace OauthExternalAuthentication
             }
         }
         
-
         #endregion
     }
 }

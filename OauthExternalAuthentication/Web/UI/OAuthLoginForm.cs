@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +28,6 @@ namespace OauthExternalAuthentication.Web.UI
             get;
             set;
         }
- 
 
         public string ReturnURLSuccess
         {
@@ -39,8 +37,9 @@ namespace OauthExternalAuthentication.Web.UI
                 {
                     var pageNode = SiteMapBase.GetCurrentProvider().FindSiteMapNodeFromKey(this.RedirectPageIdSuccess.ToString());
                     if (pageNode != null)
-                        return pageNode.Url.Replace("~","");
+                        return pageNode.Url.Replace("~", string.Empty);
                 }
+
                 return String.Empty;
             }
         }
@@ -56,7 +55,7 @@ namespace OauthExternalAuthentication.Web.UI
                     if (scriptControlDescriptor.Type == typeof(LoginWidget).FullName)
                     {
                         scriptControlDescriptor.Type = this.GetType().FullName;
- 
+
                         var realm = this.Page.Request.Url.GetLeftPart(UriPartial.Authority);
                         var serviceUrl = ServiceUrl;
                         if (!serviceUrl.Contains("?"))
@@ -64,11 +63,10 @@ namespace OauthExternalAuthentication.Web.UI
                         else
                             serviceUrl += "&";
 
-
-                        scriptControlDescriptor.AddProperty("oAuthServiceUrl", serviceUrl 
-                            + "realm=" + this.Page.Server.UrlEncode(realm) 
-                            + "&redirect_uri=" + this.Page.Server.UrlEncode(this.ReturnURLSuccess) 
-                            + "&redirect_url_failure="+this.Page.Server.UrlEncode(this.Page.Request.Url.AbsoluteUri)
+                        scriptControlDescriptor.AddProperty("oAuthServiceUrl", serviceUrl
+                            + "realm=" + this.Page.Server.UrlEncode(realm)
+                            + "&redirect_uri=" + this.Page.Server.UrlEncode(this.ReturnURLSuccess)
+                            + "&redirect_url_failure=" + this.Page.Server.UrlEncode(this.Page.Request.Url.AbsoluteUri)
                             );
                     }
                 }

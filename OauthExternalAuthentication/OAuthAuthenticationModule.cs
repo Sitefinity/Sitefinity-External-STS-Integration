@@ -161,10 +161,6 @@ namespace OauthExternalAuthentication
 
         private void ReplaceDefaultRoute(IQueryable<RouteBase> routes)
         {
-
-            var routeName = "SecurityTokenService";
-            //var defaults = new RouteValueDictionary() { { "Service", "Default" } };
-            //var constraints = new RouteValueDictionary() { { "Service", "(^wsfed$)|(^signout$)|(^oauth$)|(^swt$)|(^default$)|(^info$)" } };
             var path = Telerik.Sitefinity.Security.Claims.Constants.LocalService + "/{*Service}";
 
             foreach (var routeBase in routes)
