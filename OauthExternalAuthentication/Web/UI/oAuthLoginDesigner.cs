@@ -39,8 +39,6 @@ namespace OauthExternalAuthentication.Web.UI
             return scripts;
         }
 
-
-
         protected override string LayoutTemplateName
         {
             get

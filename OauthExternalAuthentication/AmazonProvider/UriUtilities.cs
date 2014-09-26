@@ -12,14 +12,14 @@ namespace OauthExternalAuthentication.AmazonProvider
     {
         public static void AppendQueryStringArgument(StringBuilder queryStringBuilder, string paramenter, string value)
         {
-            if (queryStringBuilder.Length> 0)
+            if (queryStringBuilder.Length > 0)
             {
                 queryStringBuilder.Append("&");
             }
+
             queryStringBuilder.Append(paramenter);
             queryStringBuilder.Append("=");
             queryStringBuilder.Append(value);
-
         }
 
         public static Uri GetPublicFacingUrl(HttpRequestBase request)

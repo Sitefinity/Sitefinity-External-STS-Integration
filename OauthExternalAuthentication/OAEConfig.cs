@@ -11,7 +11,6 @@ namespace OauthExternalAuthentication
 {
     public class OAEConfig : ConfigSection
     {
-
         #region Facebook 
 
         [ConfigurationProperty("FacebookAPPID")]
@@ -22,13 +21,12 @@ namespace OauthExternalAuthentication
             {
                 return (string)this["FacebookAPPID"];
             }
+
             set
             {
                 this["FacebookAPPID"] = value;
             } 
         }
-
-
 
         [ConfigurationProperty("FacebookAPPSecretKey")]
         [ObjectInfo(typeof(OauthExternalAuthenticationResources), Title = "FacebookAPPSecretKeyTitle", Description = "FacebookAPPSecretKeyDescription")]
@@ -38,6 +36,7 @@ namespace OauthExternalAuthentication
             {
                 return (string)this["FacebookAPPSecretKey"];
             }
+
             set
             {
                 this["FacebookAPPSecretKey"] = value;
@@ -56,13 +55,12 @@ namespace OauthExternalAuthentication
             {
                 return (string)this["GoogleClientID"];
             }
+
             set
             {
                 this["GoogleClientID"] = value;
             }
         }
-
-
 
         [ConfigurationProperty("GoogleClientSecret")]
         [ObjectInfo(typeof(OauthExternalAuthenticationResources), Title = "GoogleClientSecretTitle", Description = "GoogleClientSecretDescription")]
@@ -72,6 +70,7 @@ namespace OauthExternalAuthentication
             {
                 return (string)this["GoogleClientSecret"];
             }
+
             set
             {
                 this["GoogleClientSecret"] = value;
@@ -90,6 +89,7 @@ namespace OauthExternalAuthentication
             {
                 return (string)this["AmazonAPPID"];
             }
+
             set
             {
                 this["AmazonAPPID"] = value;
@@ -104,6 +104,7 @@ namespace OauthExternalAuthentication
             {
                 return (string)this["AmazonAPPSecretKey"];
             }
+
             set
             {
                 this["AmazonAPPSecretKey"] = value;

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -12,16 +11,15 @@ using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 
-namespace OauthExternalAuthentication 
+namespace OauthExternalAuthentication
 {
     public class OAuthAuthenticationHttpHandler : SecurityTokenServiceHttpHandler
     {
-
         public override void ProcessRequest(System.Web.HttpContext context)
         {
             if (!String.IsNullOrEmpty(context.Request.QueryString["state"]))
             {
-                TranslateStateArgument(context);
+                this.TranslateStateArgument(context);
             }
 
             if (!String.IsNullOrWhiteSpace(context.Request.QueryString["redirectOauth"]) && context.Request.QueryString["redirectOauth"] == "true")
@@ -30,11 +28,11 @@ namespace OauthExternalAuthentication
 
                 if (authResult.IsSuccessful)
                 {
-                    HandleSuccessfullOAuth(authResult, context);
+                    this.HandleSuccessfullOAuth(authResult, context);
                 }
                 else
                 {
-                    HandleFailureOAuth(authResult, context);
+                    this.HandleFailureOAuth(authResult, context);
                 }
             }
 
@@ -43,16 +41,16 @@ namespace OauthExternalAuthentication
 
         private void TranslateStateArgument(HttpContext context)
         {
-            
             var stateQueryString = context.Request.QueryString["state"];
-            var decodedQueryString =stateQueryString ;
-             
+            var decodedQueryString = stateQueryString;
+
             if (stateQueryString == null || !stateQueryString.Contains("__provider__=google"))
             {
                 decodedQueryString = System.Text.ASCIIEncoding.ASCII.GetString(System.Convert.FromBase64String(stateQueryString));
                 if (decodedQueryString.StartsWith("?"))
                     decodedQueryString = decodedQueryString.Substring(1);
             }
+
             UriBuilder builder = new UriBuilder(context.Request.Url.GetLeftPart(UriPartial.Path));
             var queryStringBuilder = new StringBuilder();
             var otherKeys = context.Request.QueryString.AllKeys.Where(p => p != "state");
@@ -69,10 +67,10 @@ namespace OauthExternalAuthentication
                     queryStringBuilder.Append(context.Request.QueryString[key]);
                 }
             }
+
             builder.Query = queryStringBuilder.ToString();
             context.Response.Redirect(builder.Uri.AbsoluteUri);
         }
-
 
         private void HandleSuccessfullOAuth(AuthenticationResult authResult, System.Web.HttpContext context)
         {
@@ -94,7 +92,7 @@ namespace OauthExternalAuthentication
                     SystemManager.RunWithElevatedPrivilege(p => { CreateUser(providerUserId, nameParts[0], nameParts[1], provierUserName); });
                 else
                 {
-                    SystemManager.RunWithElevatedPrivilege(p => { CreateUser(providerUserId, "", "", provierUserName); });
+                    SystemManager.RunWithElevatedPrivilege(p => { CreateUser(providerUserId, string.Empty, string.Empty, provierUserName); });
                 }
 
                 currentUser = userManager.GetUsers().Where(user => user.UserName == providerUserId).FirstOrDefault();
@@ -122,10 +120,9 @@ namespace OauthExternalAuthentication
         private void CreateUser(string username, string firstname, string lastname, string email)
         {
             string transaction = "FacebookLoginCreateUserTransaction" + Guid.NewGuid().ToString();
-            var userManager = UserManager.GetManager("", transaction);
-            var profileManager = UserProfileManager.GetManager("", transaction);
+            var userManager = UserManager.GetManager(string.Empty, transaction);
+            var profileManager = UserProfileManager.GetManager(string.Empty, transaction);
             var roleManager = RoleManager.GetManager("AppRoles", transaction);
-
 
             var currentUser = userManager.CreateUser(username);
 
@@ -151,14 +148,13 @@ namespace OauthExternalAuthentication
 
         protected override void SendLoginForm(HttpContext context, string message)
         {
-
-            SentLoginForm();
+            this.SentLoginForm();
             base.SendLoginForm(context, message);
         }
 
         protected override void SendLoginForm(HttpContextBase context, string message)
         {
-            SentLoginForm();
+            this.SentLoginForm();
             base.SendLoginForm(context, message);
         }
 
@@ -167,8 +163,6 @@ namespace OauthExternalAuthentication
             if (!String.IsNullOrWhiteSpace(SystemManager.CurrentHttpContext.Request.QueryString["oaprovider"]))
             {
                 OpenAuth.RequestAuthentication(SystemManager.CurrentHttpContext.Request.QueryString["oaprovider"],
-                    //context.Request.Url.GetLeftPart(UriPartial.Path).Replace(context.Request.Url.GetLeftPart(UriPartial.Authority), string.Empty) +
-                    //"?state=" + HttpUtility.UrlEncode(context.Request.Url.Query + "&redirectOauth=true")
                     SystemManager.CurrentHttpContext.Request.RawUrl + "&redirectOauth=true"
                     );
             }

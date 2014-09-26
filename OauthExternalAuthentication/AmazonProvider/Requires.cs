@@ -26,7 +26,7 @@ namespace OauthExternalAuthentication.AmazonProvider
         internal static void True(bool condition, string parameterName = null, string message = null)
         {
             if (!condition)
-                throw new ArgumentException(message , parameterName);
+                throw new ArgumentException(message, parameterName);
         }
     }
 }

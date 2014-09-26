@@ -18,11 +18,23 @@ namespace OauthExternalAuthentication.AmazonProvider
         #region Properties
 
         private string AppID { get; set; }
-        private string SecretKey { get; set; }
-        private string AuthorizationEndpoint { get { return "https://www.amazon.com/ap/oa"; } }
-        private string AccessTokenEndpoint { get { return "https://api.amazon.com/auth/o2/token"; } }
-        private string ProfileEndpoint { get { return "https://api.amazon.com/user/profile"; } }
 
+        private string SecretKey { get; set; }
+
+        private string AuthorizationEndpoint
+        {
+            get { return "https://www.amazon.com/ap/oa"; }
+        }
+
+        private string AccessTokenEndpoint
+        {
+            get { return "https://api.amazon.com/auth/o2/token"; }
+        }
+
+        private string ProfileEndpoint
+        {
+            get { return "https://api.amazon.com/user/profile"; }
+        }
 
         public string ProviderName
         {
@@ -54,11 +66,10 @@ namespace OauthExternalAuthentication.AmazonProvider
 
         private Uri GetServiceLoginUrl(Uri returnUrl)
         {
-            UriBuilder builder = new UriBuilder(AuthorizationEndpoint);
-
+            UriBuilder builder = new UriBuilder(this.AuthorizationEndpoint);
 
             StringBuilder queryStringBuilder = new StringBuilder();
-            
+
             UriUtilities.AppendQueryStringArgument(queryStringBuilder, "client_id", this.AppID);
             var state = System.Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(returnUrl.Query));
 
@@ -78,10 +89,9 @@ namespace OauthExternalAuthentication.AmazonProvider
             {
                 var code = context.Request.QueryString["code"];
 
+                var accessToken = this.QueryAccessToken(UriUtilities.ConvertToAbsoluteUri(context.Request.RawUrl, context), code);
 
-                var accessToken = QueryAccessToken(UriUtilities.ConvertToAbsoluteUri(context.Request.RawUrl, context), code);
-
-                var result = GetCustomerProfile(accessToken);
+                var result = this.GetCustomerProfile(accessToken);
 
                 AuthenticationResult authenticationResult = new AuthenticationResult(true, this.ProviderName, result["user_id"], result["name"], result);
                 return authenticationResult;
@@ -92,8 +102,6 @@ namespace OauthExternalAuthentication.AmazonProvider
                 return authenticationResult;
             }
         }
-
-
 
         private Dictionary<string, string> GetCustomerProfile(string accessToken)
         {
@@ -160,7 +168,6 @@ namespace OauthExternalAuthentication.AmazonProvider
 
             using (HttpWebResponse response = (HttpWebResponse)httpWReq.GetResponse())
             {
-
                 using (var responseStream = response.GetResponseStream())
                 {
                     string responseString = new StreamReader(responseStream).ReadToEnd();
@@ -174,7 +181,5 @@ namespace OauthExternalAuthentication.AmazonProvider
         }
 
         #endregion
-
-
     }
 }
