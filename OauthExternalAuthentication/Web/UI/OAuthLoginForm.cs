@@ -63,9 +63,17 @@ namespace OauthExternalAuthentication.Web.UI
                         else
                             serviceUrl += "&";
 
+                        //if the querystring contains ReturnUrl variable, it takes precedence
+                        string querystringReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"];
+                        string domainUrl = UrlPath.GetDomainUrl();
+                        if (querystringReturnUrl != null && querystringReturnUrl.StartsWith(domainUrl))
+                        {
+                            querystringReturnUrl = querystringReturnUrl.Remove(querystringReturnUrl.IndexOf(domainUrl), domainUrl.Length);
+                        }
+
                         scriptControlDescriptor.AddProperty("oAuthServiceUrl", serviceUrl
                             + "realm=" + this.Page.Server.UrlEncode(realm)
-                            + "&redirect_uri=" + this.Page.Server.UrlEncode(this.ReturnURLSuccess)
+                            + "&redirect_uri=" + this.Page.Server.UrlEncode(querystringReturnUrl ?? this.ReturnURLSuccess)
                             + "&redirect_url_failure=" + this.Page.Server.UrlEncode(this.Page.Request.Url.AbsoluteUri)
                             );
                     }
