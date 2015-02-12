@@ -5,6 +5,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
 using Telerik.Sitefinity.Web.UI.ControlDesign;
@@ -33,14 +35,24 @@ namespace OauthExternalAuthentication.Web.UI
         {
             get
             {
+                string url = string.Empty;
                 if (this.RedirectPageIdSuccess != Guid.Empty)
                 {
-                    var pageNode = SiteMapBase.GetCurrentProvider().FindSiteMapNodeFromKey(this.RedirectPageIdSuccess.ToString());
-                    if (pageNode != null)
-                        return pageNode.Url.Replace("~", string.Empty);
-                }
+                    //It may be that the page is restricted, and at the time of rendering the login form the node is not accessible to them
+                    //(since they are not logged in).
+                    PageManager pman = PageManager.GetManager();
 
-                return String.Empty;
+                    bool originalSecurityChecks = pman.Provider.SuppressSecurityChecks;
+                    pman.Provider.SuppressSecurityChecks = true;
+
+                    PageNode node = pman.GetPageNodes().FirstOrDefault(pagenode => pagenode.Id == this.RedirectPageIdSuccess);
+                    if (node != null)
+                    {
+                        url = node.GetFullUrl().Replace("~", string.Empty);
+                    }
+                    pman.Provider.SuppressSecurityChecks = originalSecurityChecks;
+                }
+                return url;
             }
         }
 
