@@ -97,7 +97,12 @@ namespace OauthExternalAuthentication
             //Google
             if (!String.IsNullOrEmpty(oaeConfig.GoogleClientID) && !String.IsNullOrEmpty(oaeConfig.GoogleClientSecret))
             {
-                OpenAuth.AuthenticationClients.Add("Google", () => new GoogleOAuth2Client(oaeConfig.GoogleClientID, oaeConfig.GoogleClientSecret));﻿
+                //if(OpenAuth.AuthenticationClients.GetByProviderName("Google") == null)
+                 ProviderDetails googleClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName.ToLower() == "google");
+                 if (googleClient == null)
+                 {
+                     OpenAuth.AuthenticationClients.Add("Google", () => new GoogleOAuth2Client(oaeConfig.GoogleClientID, oaeConfig.GoogleClientSecret));﻿
+                 }
             }
             //Amazon
             if (!String.IsNullOrEmpty(oaeConfig.AmazonAPPID) && !String.IsNullOrEmpty(oaeConfig.AmazonAPPSecretKey))
