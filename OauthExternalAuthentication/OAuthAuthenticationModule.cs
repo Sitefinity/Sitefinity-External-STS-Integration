@@ -97,7 +97,6 @@ namespace OauthExternalAuthentication
             //Google
             if (!String.IsNullOrEmpty(oaeConfig.GoogleClientID) && !String.IsNullOrEmpty(oaeConfig.GoogleClientSecret))
             {
-                //if(OpenAuth.AuthenticationClients.GetByProviderName("Google") == null)
                  ProviderDetails googleClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName.ToLower() == "google");
                  if (googleClient == null)
                  {
