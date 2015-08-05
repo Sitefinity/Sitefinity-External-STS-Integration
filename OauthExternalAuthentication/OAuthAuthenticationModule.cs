@@ -27,7 +27,7 @@ namespace OauthExternalAuthentication
 
         public Guid ModuleId
         {
-            get { return moduleId; }
+            get { return this.moduleId; }
         }
 
         public string Name
