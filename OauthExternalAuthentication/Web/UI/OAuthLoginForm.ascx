@@ -2,7 +2,7 @@
 <%@ Import Namespace="Microsoft.AspNet.Membership.OpenAuth" %>
 <%@ Import Namespace="System.Linq" %>
 <div id="oAuthProviders">
-    <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "facebook"))
+    <% if (OpenAuth.AuthenticationClients.GetAll().Any(p => p.ProviderName == "myfacebook"))
        { %>
     <a  href="javascript:void(0);" class="oauthloginprovider">
         <img id="facebook" src="<%=this.Page.ClientScript.GetWebResourceUrl(typeof(OauthExternalAuthentication.Web.UI.OAuthLoginForm), "OauthExternalAuthentication.Web.UI.Images.Facebook.png")%>" alt="Facebook" />
