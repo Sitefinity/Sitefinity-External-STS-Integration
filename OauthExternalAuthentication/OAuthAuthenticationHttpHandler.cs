@@ -128,6 +128,7 @@ namespace OauthExternalAuthentication
 
             var adminRole = roleManager.GetRoles().Where(role => role.Name == "Users").FirstOrDefault();
             currentUser.IsBackendUser = false;
+            currentUser.Email = email;
 
             roleManager.AddUserToRole(currentUser, adminRole);
 
