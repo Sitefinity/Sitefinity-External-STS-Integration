@@ -16,6 +16,7 @@ using DotNetOpenAuth.AspNet;
 using OauthExternalAuthentication.AmazonProvider;
 using Microsoft.AspNet.Membership.OpenAuth;
 using DotNetOpenAuth.GoogleOAuth2;
+using DotNetOpenAuth.AspNet.Clients;
 
 
 namespace OauthExternalAuthentication
@@ -88,9 +89,9 @@ namespace OauthExternalAuthentication
                 ProviderDetails faecbookClient = OpenAuth.AuthenticationClients.GetAll().FirstOrDefault(client => client.ProviderName == "facebook");
                 if (faecbookClient == null)
                 {
-                    OpenAuth.AuthenticationClients.AddFacebook(
+                    OpenAuth.AuthenticationClients.Add("facebook", () => new FacebookClientUpdated(
                         appId: oaeConfig.FacebookAPPID,
-                     appSecret: oaeConfig.FacebookAPPSecretKey);
+                     appSecret: oaeConfig.FacebookAPPSecretKey));
                 }
             }
 

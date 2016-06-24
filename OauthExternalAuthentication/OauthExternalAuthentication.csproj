@@ -234,6 +234,8 @@
     <Compile Include="AmazonProvider\AmazonOpenAuthenticationProvider.cs" />
     <Compile Include="AmazonProvider\Requires.cs" />
     <Compile Include="AmazonProvider\UriUtilities.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FacebookClientUpdated.cs" />
     <Compile Include="OAEConfig.cs" />
     <Compile Include="OAuthAuthenticationHttpHandler.cs">
       <SubType>Code</SubType>
