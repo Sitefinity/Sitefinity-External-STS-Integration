@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Web;
-using DotNetOpenAuth.Messaging;
-using DotNetOpenAuth.AspNet.Clients;
 using System.Runtime.Serialization.Json;
 using System.Reflection;
+using DotNetOpenAuth.Messaging;
+using DotNetOpenAuth.AspNet.Clients;
+using Newtonsoft.Json.Linq;
 
 namespace OauthExternalAuthentication
 {
@@ -162,8 +161,14 @@ namespace OauthExternalAuthentication
                     return null;
                 }
 
-                var parsedQueryString = HttpUtility.ParseQueryString(data);
-                return parsedQueryString["access_token"];
+                // update in order to be compliant with section 5.1 of RFC 6749
+                // [Oauth Access Token] Format - The response format of https://www.facebook.com/v2.3/oauth/access_token 
+                // returned when you exchange a code for an access_token now return valid JSON instead of being URL encoded. 
+                // The new format of this response is {"access_token": {TOKEN}, "token_type":{TYPE}, "expires_in":{TIME}}. 
+                // update to be compliant with section 5.1 of RFC 6749.
+                JObject response = JObject.Parse(data);
+                string accessToken = response.Value<string>("access_token");
+                return accessToken;
             }
         }
 
