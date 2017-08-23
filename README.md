@@ -1,7 +1,7 @@
 Sitefinity External STS Integration
 =======
 
-# This example is only valid for versions <=9.2. For Sitefinity >=10.0 it is OOB feature.
+### This example is only valid for versions <=9.2. For Sitefinity >=10.0 it is OOB feature.
 
 [![Build Status](http://sdk-jenkins-ci.cloudapp.net/buildStatus/icon?job=Telerik.Sitefinity.Samples.ExternalSTSIntegration.CI)](http://sdk-jenkins-ci.cloudapp.net/job/Telerik.Sitefinity.Samples.ExternalSTSIntegration.CI/)
 
